@@ -12,15 +12,27 @@ public class Sin3DCamera
 {
     //fields for camera manipulation
     Vector3 position;
+    /// <summary>
+    /// The (x, y, z) position of the camera.
+    /// </summary>
     public Vector3 Position { get => position; set {position = value;} }
     Vector3 rotation;
+    /// <summary>
+    /// A 3D vector representing the (yaw, pitch, roll) rotation of the camera.
+    /// </summary>
     public Vector3 Rotation { get => rotation; set {rotation = value;} }
     Vector3 target = Vector3.Zero;
 
     //fields for rendering
     Matrix viewMatrix;
+    /// <summary>
+    /// The view matrix of the camera.
+    /// </summary>
     public Matrix ViewMatrix => viewMatrix;
     Matrix projectionMatrix;
+    /// <summary>
+    /// The projection matrix of the camera.
+    /// </summary>
     public Matrix ProjectionMatrix => projectionMatrix;
 
     /// <summary>
@@ -63,16 +75,31 @@ public class Sin3DCamera
 public class Sin3DRenderer
 {
     GraphicsDevice _graphicsDevice;
+    /// <summary>
+    /// The GraphicsDevice used for handling depth stencil states.
+    /// </summary>
     public GraphicsDevice _GraphicsDevice => _graphicsDevice;
 
     //fog fields
     bool fogEnabled;
+    /// <summary>
+    /// Boolean representing if fog is enabled.
+    /// </summary>
     public bool FogEnabled { get => fogEnabled; set {fogEnabled = value;} }
     float fogStart;
+    /// <summary>
+    /// The floating point value that fog rendering on models will start at.
+    /// </summary>
     public float FogStart { get => fogStart; set {fogStart = value;} }
     float fogEnd;
+    /// <summary>
+    /// The floating point value that fog rendering on models will end at.
+    /// </summary>
     public float FogEnd { get => fogEnd; set {fogEnd = value;} }
     Vector3 fogColor;
+    /// <summary>
+    /// A 3D vector of floating point values ranging from 0 to 1 represting the RGB color of the fog.
+    /// </summary>
     public Vector3 FogColor { get => fogColor; set {fogColor = value;} }
 
     /// <summary>
@@ -126,19 +153,40 @@ public class Sin3DModel
 {
     //visual model fields
     Vector3 position;
+    /// <summary>
+    /// The (x, y, z) position of the model.
+    /// </summary>
     public Vector3 Position { get => position; set {position = value;} }
     Vector3 rotation;
+    /// <summary>
+    /// A 3D vector representing the (yaw, pitch, roll) rotation of the model.
+    /// </summary>
     public Vector3 Rotation { get => rotation; set {rotation = value;} }
     float scale;
+    /// <summary>
+    /// A floating point value representing the scale of the model.
+    /// </summary>
     public float Scale { get => scale; set {scale = value;} }
     Model baseModel;
+    /// <summary>
+    /// The base model of the class - the actual model used for rendering, collisions etc.
+    /// </summary>
     public Model BaseModel => baseModel;
     Texture2D texture;
+    /// <summary>
+    /// The texture that will be drawn onto the model.
+    /// </summary>
     public Texture2D Texture => texture;
     Matrix worldMatrix;
+    /// <summary>
+    /// The world matrix of the model, dictating its scale, rotation, and position in 3d space.
+    /// </summary>
     public Matrix WorldMatrix => worldMatrix;
 
     BoundingBox localAxisAlignedBoundingBox;
+    /// <summary>
+    /// The local axis-aligned bounding box of the model - used to derive the local OBB, the non-local AABB, and the non-local OBB for collision detection.
+    /// </summary>
     public BoundingBox LocalAxisAlignedBoundingBox => localAxisAlignedBoundingBox;
 
     /// <summary>
@@ -311,6 +359,9 @@ public class Sin3DModel
 public class Sin3DOrientedBoundingBox
 {
     private Vector3[] vertices;
+    /// <summary>
+    /// An array of the 8 vertices of the oriented bounding box.
+    /// </summary>
     public Vector3[] Vertices => vertices;
     float minAxisLength = 0.01f;
 
