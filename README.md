@@ -1,12 +1,32 @@
-# Sin3D
-A light-weight, MonoGame Extension Library created with the aim of reducing boilerplate and making 3D games as easy to create as 2D games
+** Summary **
+- Sin3D is a lightweight, MonoGame Extension Library created with the aim of reducing boilerplate and makke creating 3D games as simple as 2D.
+- It provides clean high-level abstractions for cameras, rendering, models and collision detection - without hiding MonoGame's core concepts.
 
-Contains:
 
-camera class - handles view and projection matrices for the user
+** Features **
+- Camera: An easy-to-implement Sin3DCamera system.
 
-renderer class - handles the rendering of 3d models and fog, making drawing a 3d model as easy as drawing a 2d primitive
+- Renderer: An easy-to-implement Sin3DRenderer object that allows for single-line draw statements.
 
-model class - a model class containing its own world matrix and texture, with built in methods for refreshing the world matrix and collision detection
+- Model Abstraction: A custom Sin3DModel class that handles:
+    - Position
+    - Rotation
+    - Scale
+    - World matrix
+    - Texture
+    - Collision detection with other models
 
-oriented bounding box class - a class represeting the next step after axis-aligned bounding boxes - used for an optimized 3d collision detection pipeline
+- Collision Detection:
+    - Bounding spheres
+    - Axis-aligned bounding boxes (AABB)
+    - Oriented bounding boxes (OBB)
+    - Optimized collision detection pipeline (bounding sphere -> AABB -> OBB)
+
+
+** Lightweight & Flexible **
+- Minimal overhead
+- Designed to extend MonoGame, not replace
+
+
+Note: Sin3D still requires a depth buffer. Ensure PreferredDepthStencilFormat is set before The creation of a Sin3DRenderer to avoid any errors:
+_graphics.PreferredDepthStencilFormat = DepthFormat.Depth24;
