@@ -1,7 +1,9 @@
+using System.Collections.Generic;
+using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace Sin3d;
+namespace Sin3D;
 
 
 
@@ -10,25 +12,26 @@ namespace Sin3d;
 /// </summary>
 public class Sin3DCamera
 {
-    //fields for camera manipulation
     Vector3 position;
     /// <summary>
     /// The (x, y, z) position of the camera.
     /// </summary>
     public Vector3 Position { get => position; set {position = value;} }
+
     Vector3 rotation;
     /// <summary>
     /// A 3D vector representing the (yaw, pitch, roll) rotation of the camera.
     /// </summary>
     public Vector3 Rotation { get => rotation; set {rotation = value;} }
+
     Vector3 target = Vector3.Zero;
 
-    //fields for rendering
     Matrix viewMatrix;
     /// <summary>
     /// The view matrix of the camera.
     /// </summary>
     public Matrix ViewMatrix => viewMatrix;
+
     Matrix projectionMatrix;
     /// <summary>
     /// The projection matrix of the camera.
@@ -80,22 +83,24 @@ public class Sin3DRenderer
     /// </summary>
     public GraphicsDevice _GraphicsDevice => _graphicsDevice;
 
-    //fog fields
     bool fogEnabled;
     /// <summary>
     /// Boolean representing if fog is enabled.
     /// </summary>
     public bool FogEnabled { get => fogEnabled; set {fogEnabled = value;} }
+
     float fogStart;
     /// <summary>
     /// The floating point value that fog rendering on models will start at.
     /// </summary>
     public float FogStart { get => fogStart; set {fogStart = value;} }
+
     float fogEnd;
     /// <summary>
     /// The floating point value that fog rendering on models will end at.
     /// </summary>
     public float FogEnd { get => fogEnd; set {fogEnd = value;} }
+
     Vector3 fogColor;
     /// <summary>
     /// A 3D vector of floating point values ranging from 0 to 1 represting the RGB color of the fog.
@@ -112,7 +117,7 @@ public class Sin3DRenderer
     }
 
     /// <summary>
-    /// Draws a Sin3DModel.
+    /// Draws a Sin3DModel. Note - The baseModel field of the Sin3DModel must not be null.
     /// </summary>
     /// <param name="model">The Sin3DModel to be drawn.</param>
     /// <param name="camera">The Sin3DCamera used to display what the camera can see.</param>
@@ -127,8 +132,12 @@ public class Sin3DRenderer
                 effect.World = model.WorldMatrix;
                 effect.View = camera.ViewMatrix;
                 effect.Projection = camera.ProjectionMatrix;
-                effect.TextureEnabled = true;
-                effect.Texture = model.Texture;
+
+                effect.TextureEnabled = model.TextureEnabled;
+                if (effect.TextureEnabled)
+                {
+                    effect.Texture = model.Texture;
+                }
 
                 //handling fog (if necessary)
                 if (fogEnabled)
@@ -151,32 +160,53 @@ public class Sin3DRenderer
 /// </summary>
 public class Sin3DModel
 {
-    //visual model fields
     Vector3 position;
     /// <summary>
     /// The (x, y, z) position of the model.
     /// </summary>
     public Vector3 Position { get => position; set {position = value;} }
+
     Vector3 rotation;
     /// <summary>
     /// A 3D vector representing the (yaw, pitch, roll) rotation of the model.
     /// </summary>
     public Vector3 Rotation { get => rotation; set {rotation = value;} }
+
     float scale;
     /// <summary>
     /// A floating point value representing the scale of the model.
     /// </summary>
     public float Scale { get => scale; set {scale = value;} }
+
     Model baseModel;
     /// <summary>
-    /// The base model of the class - the actual model used for rendering, collisions etc.
+    /// The base model - the actual model used for rendering, collisions etc.
     /// </summary>
     public Model BaseModel => baseModel;
-    Texture2D texture;
+
+    bool textureEnabled;
+    /// <summary>
+    /// Whether or not the model is texture-enabled.
+    /// </summary>
+    public bool TextureEnabled => textureEnabled;
+
+    Texture2D? texture;
     /// <summary>
     /// The texture that will be drawn onto the model.
     /// </summary>
-    public Texture2D Texture => texture;
+    public Texture2D? Texture
+    {
+        get => texture;
+        set
+        {
+            if (value is not null)
+            {
+                textureEnabled = true;
+                texture = value;
+            }
+        }
+    }
+    
     Matrix worldMatrix;
     /// <summary>
     /// The world matrix of the model, dictating its scale, rotation, and position in 3d space.
@@ -190,19 +220,38 @@ public class Sin3DModel
     public BoundingBox LocalAxisAlignedBoundingBox => localAxisAlignedBoundingBox;
 
     /// <summary>
-    /// Creates a new Sin3DModel with position, rotation, scale and texture settings.
+    /// Creates a new Sin3DModel with position, rotation, scale, and model settings.
     /// </summary>
-    /// <param name="position"></param>
-    /// <param name="rotation"></param>
-    /// <param name="scale"></param>
-    /// <param name="baseModel"></param>
-    /// <param name="texture"></param>
+    /// <param name="position">The initial (x, y, z) position of the model.</param>
+    /// <param name="rotation">The initial (yaw, pitch, roll) of the model.</param>
+    /// <param name="scale">The initial scale of the model.</param>
+    /// <param name="baseModel">The base model - the actual model used for rendering, collisions etc.</param>
+    public Sin3DModel(Vector3 position, Vector3 rotation, float scale, Model baseModel)
+    {
+        this.position = position;
+        this.rotation = rotation;
+        this.scale = scale;
+        this.baseModel = baseModel;
+
+        UpdateWorldMatrix();
+        CreateLocalAxisAlignedBoundingBox();
+    }
+
+    /// <summary>
+    /// Creates a new Sin3DModel with position, rotation, scale, model and texture settings.
+    /// </summary>
+    /// <param name="position">The initial (x, y, z) position of the model.</param>
+    /// <param name="rotation">The initial (yaw, pitch, roll) of the model.</param>
+    /// <param name="scale">The initial scale of the model.</param>
+    /// <param name="baseModel">The base model - the actual model used for rendering, collisions etc.</param>
+    /// <param name="texture">The texture that will be drawn onto the model.</param>
     public Sin3DModel(Vector3 position, Vector3 rotation, float scale, Model baseModel, Texture2D texture)
     {
         this.position = position;
         this.rotation = rotation;
         this.scale = scale;
         this.baseModel = baseModel;
+        textureEnabled = true;
         this.texture = texture;
 
         UpdateWorldMatrix();
@@ -363,6 +412,7 @@ public class Sin3DOrientedBoundingBox
     /// An array of the 8 vertices of the oriented bounding box.
     /// </summary>
     public Vector3[] Vertices => vertices;
+
     float minAxisLength = 0.01f;
 
     /// <summary>
