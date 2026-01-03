@@ -186,9 +186,9 @@ public class Sin3DModel
 
     bool textureEnabled;
     /// <summary>
-    /// Whether or not the model is texture-enabled.
+    /// Whether or not the model is texture-enabled. (Automatically updates when setting texture)
     /// </summary>
-    public bool TextureEnabled => textureEnabled;
+    public bool TextureEnabled { get => textureEnabled; set {textureEnabled = value; }}
 
     Texture2D? texture;
     /// <summary>
