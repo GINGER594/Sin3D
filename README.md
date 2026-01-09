@@ -2,7 +2,7 @@
 
 Sin3D is a lightweight MonoGame extension library designed to reduce boilerplate and make creating 3D games feel as simple as working in 2D.
 
-It provides clean, high-level abstractions for cameras, rendering, models, and collision detection — without hiding or replacing MonoGame’s core concepts.
+It provides clean, high-level abstractions for cameras, rendering, models, and collision detection — without hiding or replacing MonoGame’s core.
 
 ---
 
@@ -20,15 +20,14 @@ A `Model3D` class that manages:
 - Rotation (quaternion-based)
 - Scale
 - World matrix
-- Texture binding
+- Model texture
 - Collision detection with other models (including multi-mesh models)
 
 ### Collision Detection
 - Bounding spheres
 - Axis-aligned bounding boxes (AABB)
 - Oriented bounding boxes (OBB)
-- Optimized collision pipeline:
-  - Bounding Sphere → AABB → OBB
+- Optimized collision pipeline: Bounding Sphere → AABB → OBB
 
 ---
 
