@@ -1,32 +1,48 @@
-** Summary **
-- Sin3D is a lightweight, MonoGame Extension Library created with the aim of reducing boilerplate and makke creating 3D games as simple as 2D.
-- It provides clean high-level abstractions for cameras, rendering, models and collision detection - without hiding MonoGame's core concepts.
+# Sin3D
 
+Sin3D is a lightweight MonoGame extension library designed to reduce boilerplate and make creating 3D games feel as simple as working in 2D.
 
-** Features **
-- Camera: An easy-to-implement Sin3DCamera system.
+It provides clean, high-level abstractions for cameras, rendering, models, and collision detection — without hiding or replacing MonoGame’s core concepts.
 
-- Renderer: An easy-to-implement Sin3DRenderer object that allows for single-line draw statements.
+---
 
-- Model Abstraction: A custom Sin3DModel class that handles:
-    - Position
-    - Rotation
-    - Scale
-    - World matrix
-    - Texture
-    - Collision detection with other models
+## Features
 
-- Collision Detection:
-    - Bounding spheres
-    - Axis-aligned bounding boxes (AABB)
-    - Oriented bounding boxes (OBB)
-    - Optimized collision detection pipeline (bounding sphere -> AABB -> OBB)
+### Camera
+- Simple, configurable `Camera3D` system
 
+### Renderer
+- `Renderer3D` for concise, single-line draw calls
 
-** Lightweight & Flexible **
+### Model Abstraction
+A `Model3D` class that manages:
+- Position
+- Rotation (quaternion-based)
+- Scale
+- World matrix
+- Texture binding
+- Collision detection with other models (including multi-mesh models)
+
+### Collision Detection
+- Bounding spheres
+- Axis-aligned bounding boxes (AABB)
+- Oriented bounding boxes (OBB)
+- Optimized collision pipeline:
+  - Bounding Sphere → AABB → OBB
+
+---
+
+## Lightweight & Flexible
 - Minimal overhead
-- Designed to extend MonoGame, not replace
+- Designed to extend MonoGame, not replace it
 
+---
 
-Note: Sin3D still requires a depth buffer. Ensure PreferredDepthStencilFormat is set before The creation of a Sin3DRenderer to avoid any errors:
+## Requirements
+
+Sin3D requires a depth buffer.
+
+Ensure `PreferredDepthStencilFormat` is set **before** creating a `Sin3DRenderer`:
+
+```csharp
 _graphics.PreferredDepthStencilFormat = DepthFormat.Depth24;
