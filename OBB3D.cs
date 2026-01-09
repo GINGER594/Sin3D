@@ -112,7 +112,7 @@ public class OrientedBoundingBox
         arr3.CopyTo(axes, arr1.Length + arr2.Length);
         foreach (Vector3 axis in axes)
         {
-            if (axis.Length() > 0.01f)
+            if (axis.LengthSquared() > 0.000001f) //not including any axes that tend toward zero
             {
                 normalizedAxes.Add(Vector3.Normalize(axis));
             }
