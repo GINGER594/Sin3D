@@ -42,7 +42,7 @@ A `Model3D` class that manages:
 
 Sin3D requires a depth buffer.
 
-Ensure `PreferredDepthStencilFormat` is set **before** creating a `Sin3DRenderer`:
+Ensure `PreferredDepthStencilFormat` is set **before** creating a `Renderer3D`:
 
 ```csharp
 _graphics.PreferredDepthStencilFormat = DepthFormat.Depth24;
