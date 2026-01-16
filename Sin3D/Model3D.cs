@@ -49,7 +49,7 @@ public class Model3D
     /// <summary>
     /// The list of local, axis-aligned bounding boxes created from the model's meshes (empty until Build method is called).
     /// </summary>
-    public List<BoundingBox> LocalAxisAlignedBoundingBoxes => localAxisAlignedBoundingBoxes;
+    public List<BoundingBox> LocalAxisAlignedBoundingBoxes { get => localAxisAlignedBoundingBoxes; set {localAxisAlignedBoundingBoxes = value;} }
 
     /// <summary>
     /// Creates a new Model3D object with position, rotation, and scale settings.
