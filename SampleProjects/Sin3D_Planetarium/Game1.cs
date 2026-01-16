@@ -103,7 +103,7 @@ public class Game1 : Game
         //creating sun
         sun = new Model3D(
             Vector3.Zero,
-            new Quaternion(-(float)Math.Sin(MathHelper.PiOver4), 0, 0, (float)Math.Cos(MathHelper.PiOver4)),
+            new Quaternion(-(float)Math.Sin(MathHelper.PiOver4), 0f, 0f, (float)Math.Cos(MathHelper.PiOver4)),
             100f,
             sphereModel,
             [Content.Load<Texture2D>("2k_sun")]
