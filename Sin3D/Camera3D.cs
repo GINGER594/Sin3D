@@ -120,3 +120,4 @@ public class Camera3D
         projectionMatrix = Matrix.CreatePerspectiveFieldOfView(fov, _graphicsDevice.Viewport.AspectRatio, nearPlaneDist, farPlaneDist);
     }
 }
+
