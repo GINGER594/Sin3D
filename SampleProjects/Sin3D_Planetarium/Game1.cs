@@ -1,4 +1,4 @@
-﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Sin3D._Camera3D;
@@ -6,7 +6,7 @@ using Sin3D._Renderer3D;
 using Sin3D._Model3D;
 using planet;
 
-namespace Sin3DPlanetarium;
+namespace PreProdSin3DPlayground;
 
 public class Game1 : Game
 {
@@ -19,7 +19,6 @@ public class Game1 : Game
     //skybox/sun settings
     Model3D skybox;
     Model3D sun;
-    float sunRotateSpeed = 12f;
     Vector3 ambientLightColor = new Vector3(0.95f, 0.95f, 0.95f);
     Vector3 sunLightColor = new Vector3(0.004f, 0.0015f, 0f);
 
@@ -163,10 +162,6 @@ public class Game1 : Game
         var keystate = Keyboard.GetState();
         HandleCameraInputs(keystate);
 
-        //rotating sun
-        sun.Rotation *= Quaternion.CreateFromAxisAngle(Vector3.Normalize(Vector3.UnitZ), MathHelper.ToRadians(sunRotateSpeed));
-        sun.UpdateWorldMatrix();
-
         //rotating+orbiting moon
         moon.Rotate();
         moon.OrbitPlanet(planets[2]);
@@ -187,9 +182,11 @@ public class Game1 : Game
         renderer.ResetRenderingSettings();
 
         //drawing skybox
+        renderer._depthStencilState = DepthStencilState.DepthRead;
         renderer.DrawModel3D(skybox, cam);
 
         //drawing sun
+        renderer.ResetRenderingSettings();
         renderer.DrawModel3D(sun, cam);
 
         //drawing moon
@@ -204,6 +201,7 @@ public class Game1 : Game
         foreach (Planet planet in planets)
         {
             //drawing planet
+            renderer._depthStencilState = DepthStencilState.Default;
             renderer.LightingEnabled = true;
             renderer.AmbientLightColor = ambientLightColor;
             DirectionalLightPropertyGroup dirLight = new DirectionalLightPropertyGroup(true, planet.PlanetModel.Position, sunLightColor);
@@ -212,6 +210,7 @@ public class Game1 : Game
             renderer.ResetRenderingSettings();
 
             //drawing trail
+            renderer._depthStencilState = DepthStencilState.DepthRead;
             for (int i = 0; i < planet.Trail.Count; i++)
             {
                 renderer.EffectAlpha = 1f - (Math.Abs(i - (planet.Trail.Count / 2f)) / (planet.Trail.Count / 2f));
