@@ -36,18 +36,6 @@ It provides clean, high-level abstractions for cameras, rendering, models, and c
 
 ---
 
-## Requirements
-
-Sin3D requires a depth buffer.
-
-Ensure `PreferredDepthStencilFormat` is set **before** creating a `Renderer3D`:
-
-```csharp
-_graphics.PreferredDepthStencilFormat = DepthFormat.Depth24;
-```
-
----
-
 ## How To Get Started:
 - Install MonoGame and add to your project.
 - Install Sin3D and add to your project.
