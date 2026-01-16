@@ -11,6 +11,7 @@ namespace Sin3D._Renderer3D;
 public class Renderer3D
 {
     GraphicsDevice _graphicsDevice;
+    
     DepthStencilState depthStencilState = DepthStencilState.Default;
     /// <summary>
     /// The renderer's depth stencil state - should be used to alternate between drawing opaque/transparent objects etc.
