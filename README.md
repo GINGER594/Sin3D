@@ -9,31 +9,30 @@ It provides clean, high-level abstractions for cameras, rendering, models, and c
 ## Features
 
 ### Camera
-- Simple, configurable `Camera3D` system
+`Camera3D` class:
+- Handles view and projection matrices.
 
 ### Renderer
-- `Renderer3D` for concise, single-line draw calls
+`Renderer3D` class:
+- Toggleable default BasicEffect lighting.
+- Configurable directional BasicEffect lighting.
+- Configurable fog.
+- Single-line render calls.
 
 ### Model Abstraction
-A `Model3D` class that manages:
-- Position
-- Rotation (quaternion-based)
-- Scale
-- World matrix
-- Model texture
-- Collision detection with other models (including multi-mesh models)
+`Model3D` class:
+- Handles position.
+- Handles rotation (quaternion-based).
+- Handles scale.
+- Handles World matrix.
+- Texture mapping (including per-mesh texture-mapping for multi-meshed models).
+- Collision detection with other models (including multi-mesh models).
 
 ### Collision Detection
 - Bounding spheres
 - Axis-aligned bounding boxes (AABB)
 - Oriented bounding boxes (OBB)
 - Optimized collision pipeline: Bounding Sphere → AABB → OBB
-
----
-
-## Lightweight & Flexible
-- Minimal overhead
-- Designed to extend MonoGame, not replace it
 
 ---
 
@@ -45,3 +44,11 @@ Ensure `PreferredDepthStencilFormat` is set **before** creating a `Renderer3D`:
 
 ```csharp
 _graphics.PreferredDepthStencilFormat = DepthFormat.Depth24;
+```
+
+---
+
+## How To Get Started:
+- Install MonoGame and add to your project.
+- Install Sin3D and add to your project.
+- Start coding! (sample projects can be found in the sample projects folder ready for you to build).
