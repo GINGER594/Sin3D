@@ -6,7 +6,7 @@ using Sin3D._Renderer3D;
 using Sin3D._Model3D;
 using planet;
 
-namespace PreProdSin3DPlayground;
+namespace Sin3DPlanetarium;
 
 public class Game1 : Game
 {
@@ -103,7 +103,7 @@ public class Game1 : Game
         //creating sun
         sun = new Model3D(
             Vector3.Zero,
-            new Quaternion(-(float)Math.Sin(MathHelper.PiOver4), 0f, 0f, (float)Math.Cos(MathHelper.PiOver4)),
+            new Quaternion(-(float)Math.Sin(MathHelper.PiOver4), 0, 0, (float)Math.Cos(MathHelper.PiOver4)),
             100f,
             sphereModel,
             [Content.Load<Texture2D>("2k_sun")]
@@ -181,42 +181,13 @@ public class Game1 : Game
         GraphicsDevice.Clear(Color.Black);
         renderer.ResetRenderingSettings();
 
-        //drawing skybox
-        renderer._depthStencilState = DepthStencilState.DepthRead;
         renderer.DrawModel3D(skybox, cam);
-
-        //drawing sun
-        renderer.ResetRenderingSettings();
         renderer.DrawModel3D(sun, cam);
-
-        //drawing moon
-        renderer.LightingEnabled = true;
-        renderer.AmbientLightColor = ambientLightColor;
-        DirectionalLightPropertyGroup moonLight = new DirectionalLightPropertyGroup(true, moon.PlanetModel.Position, sunLightColor);
-        renderer.DirectionalLight0 = moonLight;
-        renderer.DrawModel3D(moon.PlanetModel, cam);
-        renderer.ResetRenderingSettings();
-
-        //drawing planets
+        DrawMoon();
         foreach (Planet planet in planets)
         {
-            //drawing planet
-            renderer._depthStencilState = DepthStencilState.Default;
-            renderer.LightingEnabled = true;
-            renderer.AmbientLightColor = ambientLightColor;
-            DirectionalLightPropertyGroup dirLight = new DirectionalLightPropertyGroup(true, planet.PlanetModel.Position, sunLightColor);
-            renderer.DirectionalLight0 = dirLight;
-            renderer.DrawModel3D(planet.PlanetModel, cam);
-            renderer.ResetRenderingSettings();
-
-            //drawing trail
-            renderer._depthStencilState = DepthStencilState.DepthRead;
-            for (int i = 0; i < planet.Trail.Count; i++)
-            {
-                renderer.EffectAlpha = 1f - (Math.Abs(i - (planet.Trail.Count / 2f)) / (planet.Trail.Count / 2f));
-                renderer.DrawModel3D(planet.Trail[i], cam);
-                renderer.ResetRenderingSettings();
-            }
+            DrawPlanet(planet);
+            DrawTrail(planet);
         }
         base.Draw(gameTime);
     }
@@ -272,5 +243,38 @@ public class Game1 : Game
 
         cam.Pitch = Math.Clamp(cam.Pitch, -1.55f, 1.55f);
         cam.UpdateViewMatrix();
+    }
+
+    //method for drawing the moon
+    void DrawMoon()
+    {
+        renderer.LightingEnabled = true;
+        renderer.AmbientLightColor = ambientLightColor;
+        DirectionalLightPropertyGroup moonLight = new DirectionalLightPropertyGroup(true, moon.PlanetModel.Position, sunLightColor);
+        renderer.DirectionalLight0 = moonLight;
+        renderer.DrawModel3D(moon.PlanetModel, cam);
+        renderer.ResetRenderingSettings();
+    }
+
+    //method for drawing a planet
+    void DrawPlanet(Planet planet)
+    {
+        renderer.LightingEnabled = true;
+        renderer.AmbientLightColor = ambientLightColor;
+        DirectionalLightPropertyGroup dirLight = new DirectionalLightPropertyGroup(true, planet.PlanetModel.Position, sunLightColor);
+        renderer.DirectionalLight0 = dirLight;
+        renderer.DrawModel3D(planet.PlanetModel, cam);
+        renderer.ResetRenderingSettings();
+    }
+
+    //method for drawing the trail of a planet
+    void DrawTrail(Planet planet)
+    {
+        for (int i = 0; i < planet.Trail.Count; i++)
+        {
+            renderer.EffectAlpha = 1f - (Math.Abs(i - (planet.Trail.Count / 2f)) / (planet.Trail.Count / 2f));
+            renderer.DrawModel3D(planet.Trail[i], cam);
+            renderer.ResetRenderingSettings();
+        }
     }
 }
