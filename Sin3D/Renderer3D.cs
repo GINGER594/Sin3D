@@ -224,3 +224,4 @@ public struct DirectionalLightPropertyGroup
         this.diffuseColor = diffuseColor;
     }
 }
+
