@@ -93,9 +93,9 @@ public class Renderer3D
     /// </summary>
     public void ResetRenderingSettings()
     {
-        //resetting depth stencil/blend state
-        _graphicsDevice.DepthStencilState = DepthStencilState.Default;
+        //resetting depth blend state/depth stencil
         _graphicsDevice.BlendState = BlendState.Opaque;
+        _graphicsDevice.DepthStencilState = DepthStencilState.Default;
 
         //resetting light fields
         effectAlpha = 1f;
