@@ -104,7 +104,7 @@ public class Model3D
     /// </summary>
     public void BuildLocalAxisAlignedBoundingBoxes()
     {
-        localAxisAlignedBoundingBoxes = new();
+        localAxisAlignedBoundingBoxes.Clear();
         //Creating an AABB for each mesh
         foreach (ModelMesh mesh in baseModel.Meshes)
         {
