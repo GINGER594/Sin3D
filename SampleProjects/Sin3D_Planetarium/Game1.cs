@@ -181,14 +181,21 @@ public class Game1 : Game
         GraphicsDevice.Clear(Color.Black);
         renderer.ResetRenderingSettings();
 
+        //drawing opaque objects
         renderer.DrawModel3D(skybox, cam);
-        renderer.DrawModel3D(sun, cam);
+        renderer.DrawModel3D(sun, cam);        
         DrawMoon();
         foreach (Planet planet in planets)
         {
             DrawPlanet(planet);
+        }
+
+        //drawing transparent objects
+        foreach (Planet planet in planets)
+        {
             DrawTrail(planet);
         }
+
         base.Draw(gameTime);
     }
 
@@ -250,9 +257,10 @@ public class Game1 : Game
     {
         renderer.LightingEnabled = true;
         renderer.AmbientLightColor = ambientLightColor;
-        DirectionalLightPropertyGroup moonLight = new DirectionalLightPropertyGroup(true, moon.PlanetModel.Position, sunLightColor);
+        DirectionalLightPropertyGroup moonLight = new DirectionalLightPropertyGroup(true, moon.PlanetModel.Position, sunLightColor, Vector3.Zero);
         renderer.DirectionalLight0 = moonLight;
         renderer.DrawModel3D(moon.PlanetModel, cam);
+
         renderer.ResetRenderingSettings();
     }
 
@@ -261,9 +269,10 @@ public class Game1 : Game
     {
         renderer.LightingEnabled = true;
         renderer.AmbientLightColor = ambientLightColor;
-        DirectionalLightPropertyGroup dirLight = new DirectionalLightPropertyGroup(true, planet.PlanetModel.Position, sunLightColor);
+        DirectionalLightPropertyGroup dirLight = new DirectionalLightPropertyGroup(true, planet.PlanetModel.Position, sunLightColor, Vector3.Zero);
         renderer.DirectionalLight0 = dirLight;
         renderer.DrawModel3D(planet.PlanetModel, cam);
+
         renderer.ResetRenderingSettings();
     }
 
@@ -274,6 +283,7 @@ public class Game1 : Game
         {
             renderer.EffectAlpha = 1f - (Math.Abs(i - (planet.Trail.Count / 2f)) / (planet.Trail.Count / 2f));
             renderer.DrawModel3D(planet.Trail[i], cam);
+            
             renderer.ResetRenderingSettings();
         }
     }
