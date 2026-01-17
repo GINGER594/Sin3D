@@ -154,7 +154,7 @@ public class Model3D
     }
 
     /// <summary>
-    /// Checks if the axis-aligned bounding boxes of 2 models intersect (axis-aligned bounding boxes must be built).
+    /// Checks if the axis-aligned bounding boxes of 2 models intersect (local axis-aligned bounding boxes must be built).
     /// </summary>
     /// <param name="model2">The other model.</param>
     /// <returns>boolean - whether or not an intersection was detected.</returns>
@@ -189,7 +189,7 @@ public class Model3D
     }
 
     /// <summary>
-    /// Checks if the oriented bounding boxes of 2 models intersect (axis-aligned bounding boxes must be built).
+    /// Checks if the oriented bounding boxes of 2 models intersect (local axis-aligned bounding boxes must be built).
     /// </summary>
     /// <param name="model2">The other model.</param>
     /// <returns>boolean - whether or not an intersection was detected.</returns>
@@ -216,7 +216,7 @@ public class Model3D
     }
 
     /// <summary>
-    /// Checks if 2 models intersect using the optimized hierarchy of methods: bounding spheres -> AABB -> OBB (axis-aligned bounding boxes must be built).
+    /// Checks if 2 models intersect using the optimized hierarchy of methods: bounding spheres -> AABB -> OBB (local axis-aligned bounding boxes must be built).
     /// </summary>
     /// <param name="model2">The other model.</param>
     /// <returns>boolean - whether or not an intersection was detected.</returns>
