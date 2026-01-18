@@ -39,4 +39,4 @@ It provides clean, high-level abstractions for cameras, rendering, models, and c
 ## How To Get Started:
 - Install MonoGame and add to your project.
 - Install Sin3D and add to your project.
-- Start coding! (sample projects can be found in the sample projects folder ready for you to build).
+- Start coding! (sample projects can be found in the SampleProjects folder ready for you to build!)
